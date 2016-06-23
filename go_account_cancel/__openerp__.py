@@ -30,7 +30,7 @@
     'complexity': 'normal',
     'description': '''This module will show invoice number even if invoice is
 cancelled.''',
-    'author': 'Othmane Ghandi (Usman BEK)',
+    'author': 'Othmane Ghandi (Usman BEK), ThinkOpen Solutions',
     'license': 'AGPL-3',
     'website': 'http://www.odoo.gotodoo.com',
     'depends': ['base',
