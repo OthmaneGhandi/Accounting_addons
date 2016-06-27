@@ -35,6 +35,7 @@
     'depends': ['base','account'],
     'category': 'Autre',
     'demo': [],
+    'images': ['images/main_screenshot.png'],
     'data': [
             "views/layouts.xml",
              "account_voucher/report_account_voucher.xml",
