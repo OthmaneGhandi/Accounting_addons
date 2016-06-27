@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="report_account_voucher_document">
+
+                <t t-call="payment_receipt.external_layout_receipt">
+                    <div class="page">
+
+                        <h3 class="title">Paiement Client <span t-if="o.number">  : <span t-field="o.number"/></span></h3>
+
+                        <table class="voucher_table">
+                            <tr>
+                                <td>Client</td>
+                                <td>:</td>
+                                <td><span t-if="o.partner_id.name"><span t-field="o.partner_id.name"/></span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Montant payé</td>
+                                <td>:</td>
+                                <td><span t-if="o.amount"><span t-field="o.amount"/></span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td> Date paiement</td>
+                                <td>:</td>
+                                <td><span t-if="o.date"><span t-field="o.date"/></span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Méthode de paiement</td>
+                                <td>:</td>
+                                <td><span t-if="o.journal_id"><span t-field="o.journal_id"/></span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Référence de paiement</td>
+                                <td>:</td>
+                                <td><span t-if="o.reference"><span t-field="o.reference"/></span></td>
+                                <td></td>
+                            </tr>
+                            <!--tr>
+                                <td colspan="3">  </td>
+                                <td>
+                                    <span t-if="o.partner_id.name"><span t-field="o.partner_id.name"/></span>
+                                    <span t-if="o.partner_id.street"><br/><span t-field="o.partner_id.street"/></span> <span t-if="o.partner_id.street2">- <span t-field="o.partner_id.street2"/></span>
+                                    <span t-if="o.partner_id.zip"><br/><span t-field="o.partner_id.zip"/></span>
+                                    <span t-if="o.partner_id.city"><br/><span t-field="o.partner_id.city"/></span>
+                                    <span t-if="o.partner_id.country_id"><br/><span t-field="o.partner_id.country_id.name"/></span>
+                                </td>
+                            </tr-->
+                        </table>
+                        <t t-if="display_cr">
+                        <br/>
+                        <h3>Crédits</h3>
+                        <br/>
+
+                        <table class="voucher_table_2">
+                            <tr>
+                                <td>Numéro Facture</td>
+                                <td>Date</td>
+                                <td>Date d'échéance</td>
+                                <td>Montant original</td>
+                                <td>Restant dû</td>
+                                <td>Allocation</td>
+                            </tr>
+                            <tr class="voucher_line_table_2" t-foreach="o.line_cr_ids" t-as="l">
+                                <td t-if="l.amount != 0"><span t-field="l.move_line_id"/></td>
+                                <td t-if="l.amount != 0"><span t-field="l.date_original"/></td>
+                                <td t-if="l.amount != 0"><span t-field="l.date_due"/></td>
+                                <td t-if="l.amount != 0"><span t-field="l.amount_original"/></td>
+                                <td t-if="l.amount != 0"><span t-field="l.amount_unreconciled"/></td>
+                                <td t-if="l.amount != 0"><span t-field="l.amount"/></td>
+                            </tr>
+                        </table>
+                        </t>
+                        <t t-if="display_dr">
+                        <br/>
+                        <h3>Débits</h3>
+                        <br/>
+
+                        <table class="voucher_table_2">
+                            <tr>
+                                <td>Numéro Facture</td>
+                                <td>Date</td>
+                                <td>Date d'échéance</td>
+                                <td>Montant original</td>
+                                <td>Restant dû</td>
+                                <td>Allocation</td>
+                            </tr>
+                            <tr class="voucher_line_table_2" t-foreach="o.line_dr_ids" t-as="l">
+                                <td t-if="l.amount != 0"><span t-field="l.move_line_id"/></td>
+                                <td t-if="l.amount != 0"><span t-field="l.date_original"/></td>
+                                <td t-if="l.amount != 0"><span t-field="l.date_due"/></td>
+                                <td t-if="l.amount != 0"><span t-field="l.amount_original"/></td>
+                                <td t-if="l.amount != 0"><span t-field="l.amount_unreconciled"/></td>
+                                <td t-if="l.amount != 0"><span t-field="l.amount"/></td>
+                            </tr>
+                        </table>
+                        </t>
+                    </div>
+                </t>
+
+        </template>
+
+    <template id="report_account_voucher">
+    <t t-call="report.html_container">
+        <t t-foreach="doc_ids" t-as="doc_id">
+            <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'payment_receipt.report_account_voucher_document')"/>
+        </t>
+    </t>
+    </template>
+
+    </data>
+</openerp>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="minimal_layout_moj" inherit_id="report.minimal_layout" name="moj_reports minimal_layout">
+        <xpath expr='//link[@href="/web/static/lib/bootstrap/css/bootstrap.css"]' position="before">
+            <link rel="stylesheet" href="/payment_receipt/static/src/css/reports_view.css"/>
+        </xpath>
+    </template>
+
+        <report
+            id="report_account_voucher_paymentreceipt"
+            string="Reçu Paiement Client"
+            model="account.voucher"
+            report_type="qweb-pdf"
+            file="payment_receipt.report_account_voucher"
+            name="payment_receipt.report_account_voucher"
+                />
+
+
+
+    </data>
+</openerp>

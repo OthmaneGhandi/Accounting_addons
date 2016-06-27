@@ -1,0 +1,48 @@
+import time
+from datetime import datetime
+from openerp.report import report_sxw
+from openerp.osv import osv
+
+class AccountVoucherReport(report_sxw.rml_parse):
+# fuction init
+    def __init__(self, cr, uid, name, context):
+        super(AccountVoucherReport, self).__init__(cr, uid, name, context=context)
+        ids = context.get('active_ids')
+        partner_contact=""
+        display_cr=False
+        display_dr=False
+        voucher_obj = self.pool['account.voucher']
+        voucher_line_obj = self.pool['account.voucher.line']
+
+        lines_cr=voucher_line_obj.search(cr,uid,[('voucher_id','=',ids),('amount','!=',0),('type' ,'=','cr')])
+        if lines_cr:
+            display_cr=True
+
+        lines_dr=voucher_line_obj.search(cr,uid,[('voucher_id','=',ids),('amount','!=',0),('type' ,'=','dr')])
+        if lines_dr:
+            display_dr=True
+
+        docs = voucher_obj.browse(cr, uid, ids, context)
+
+        self.localcontext.update({
+        'docs': docs,
+        'time': time,
+        'message': self._message,
+        'display_cr': display_cr,
+        'display_dr': display_dr,
+        })
+        self.context = context
+
+# fucntion message
+    def _message(self, obj, company):
+        company_pool = self.pool['res.company']
+        message = company_pool.browse(self.cr, self.uid, company.id, {'lang':obj.lang}).overdue_msg
+        return message.split('\n')
+
+# class reportPartnerReport
+class ReportAccountVoucherReport(osv.AbstractModel):
+    _name = 'report.payment_receipt.report_account_voucher'
+    _inherit = 'report.abstract_report'
+    _template = 'payment_receipt.report_account_voucher'
+    _wrapped_report_class = AccountVoucherReport
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

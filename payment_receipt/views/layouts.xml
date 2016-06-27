@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+<template id="external_layout_receipt">
+    <!-- Multicompany -->
+    <t t-if="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+        <t t-set="company" t-value="res_company"></t>
+    </t>
+    <t t-call="payment_receipt.external_layout_header_receipt" />
+    <t t-raw="0" />
+    <t t-call="report.external_layout_footer" />
+</template>
+
+<template id="external_layout_header_receipt">
+    <div class="header">
+        <div class="row">
+            <div class="col-xs-2 pull-left">
+                <img class="logo_es" t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo"/>
+            </div>
+        </div>
+    </div>
+</template>
+
+<!--template id="layout_footer_moj">
+    <div class="footer">
+        <div class="text-center">
+
+            <table class="table_footer1">
+                <tr>
+                    <td><t t-if="company.custom_footer"><span class="bec_footer1" t-raw="company.rml_footer"/></t></td>
+                </tr>
+            </table>
+
+            <ul class="list-inline">
+                <li><span class="page"/></li>
+            </ul>
+        </div>
+    </div>
+</template-->
+
+
+</data>
+
+</openerp>
