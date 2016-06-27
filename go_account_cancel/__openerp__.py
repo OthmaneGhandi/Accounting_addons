@@ -41,6 +41,7 @@ cancelled.''',
     'data': [
         'invoice_cancel_view.xml',
     ],
+    'images': ['images/main_screenshot.png'],
     'init': [],
     'demo': [],
     'update': [],
